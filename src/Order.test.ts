@@ -7,7 +7,7 @@ test("Should order with valid cpf", function () {
   const newOrder: IOrder = { client, items: [firstItem] };
   order.setOrder(newOrder);
 
-  expect(order.getOrder()).toMatchObject(newOrder);
+  expect(order.getOrder()).toBe(newOrder);
 });
 
 test("Should order with three items", function () {
@@ -22,7 +22,7 @@ test("Should order with three items", function () {
   const thirdItem: IItem = {
     description: "calça",
     price: 100,
-    quantity: 1,
+    quantity: 2,
   };
   const coupon: ICoupon = { description: "c1", valueInPercent: 10 };
   const newOrder: IOrder = {
@@ -32,7 +32,7 @@ test("Should order with three items", function () {
   };
   order.setOrder(newOrder);
 
-  expect(order.getOrder().items.length).toBe(3);
+  expect(order.getOrder().amountWithDiscount).toBe(315);
 });
 
 test("Should order with coupon", function () {
@@ -43,5 +43,5 @@ test("Should order with coupon", function () {
   const newOrder: IOrder = { client, items: [firstItem], coupon };
   order.setOrder(newOrder);
 
-  expect(order.getOrder().coupon?.valueInPercent).toBe(10);
+  expect(order.getOrder().amountWithDiscount).toBe(45);
 });
