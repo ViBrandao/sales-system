@@ -35,7 +35,7 @@ export class Order {
     }
     order.amount = this.calculateAmount(order.items);
     if (order.coupon) {
-      order.amountWithDiscount = this.calculateAmountWithDescount(
+      order.amountWithDiscount = this.calculateAmountWithDiscount(
         order.amount,
         order.coupon.valueInPercent
       );
@@ -94,12 +94,12 @@ export class Order {
   calculateAmount(items: IItem[]): number {
     let totalPrice = 0;
     items.forEach((item) => {
-      totalPrice += item.price;
+      totalPrice += item.price * item.quantity;
     });
     return totalPrice;
   }
 
-  calculateAmountWithDescount(amount: number, valueInPercent: number): number {
-    return amount * (valueInPercent / 100);
+  calculateAmountWithDiscount(amount: number, valueInPercent: number): number {
+    return amount - amount * (valueInPercent / 100);
   }
 }
